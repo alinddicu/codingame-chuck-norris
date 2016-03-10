@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="ChuckNorrisBinaryConverterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StringToBinaryConverterTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\codingame.chuck.norris\codingame.chuck.norris.csproj">
