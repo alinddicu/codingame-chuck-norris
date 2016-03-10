@@ -25,28 +25,27 @@
 
         public string Execute(string message)
         {
-            var arrayOfStrings = StringToBinaryConverter
+            var bytesAsStrings = StringToBinaryConverter
                 .Execute(message)
                 .Select(c => c.ToString())
-                .Select((s, index) => new { Index = index, @Byte = s })
                 .ToArray();
 
-            var previousByte = arrayOfStrings.First().Byte;
+            var previousByte = bytesAsStrings.First();
             var series = new List<Serie>();
-            var count = 0;
             var serie = new Serie(previousByte);
-            foreach (var item in arrayOfStrings)
+            for (var index = 0; index < bytesAsStrings.Length; index++)
             {
-                if (item.Byte != previousByte)
+                var @byte = bytesAsStrings[index];
+                if (@byte != previousByte)
                 {
                     series.Add(serie);
-                    serie = new Serie(item.Byte);
+                    serie = new Serie(@byte);
                 }
 
                 serie.Increment();
-                previousByte = item.Byte;
+                previousByte = @byte;
 
-                if (item.Index == arrayOfStrings.Count() - 1)
+                if (index == bytesAsStrings.Length - 1)
                 {
                     series.Add(serie);
                 }
@@ -92,7 +91,7 @@
                 .GetBytes(message)
                 .Select(i => Convert.ToString(i, 2));
 
-            return string.Join("", array);
+            return string.Join(string.Empty, array);
         }
     }
 }
