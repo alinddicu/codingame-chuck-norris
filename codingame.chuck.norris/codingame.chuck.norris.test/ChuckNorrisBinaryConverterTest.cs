@@ -24,5 +24,24 @@
         {
             Check.That(_converter.Execute("C")).IsEqualTo("0 0 00 0000 0 00");
         }
+
+        [TestMethod]
+        public void GivenPercentThenReturnSomething()
+        {
+            // 100101
+            //                                             0 0 00 00 0 0 00 0 0 0
+            Check.That(_converter.Execute("%")).IsEqualTo("0 0 00 00 0 0 00 0 0 0");
+        }
+
+        [TestMethod]
+        public void GivenChucksMessageThenReturnSomething()
+        {
+            var message = "Chuck Norris' keyboard has 2 keys: 0 and white space.";
+
+            var result = _converter.Execute(message);
+
+            Check.That(result)
+                .IsEqualTo("0 0 00 0000 0 0000 00 0 0 0 00 000 0 000 00 0 0 0 00 0 0 000 00 000 0 0000 00 0 0 0 00 0 0 00");
+        }
     }
 }

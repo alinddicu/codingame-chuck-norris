@@ -29,5 +29,13 @@
 
             Check.That(_converter.Execute("CC")).IsEqualTo(expected);
         }
+
+        [TestMethod]
+        public void WhenPercentThenRetrun37AsBinary()
+        {
+            var expected = "100101";
+
+            Check.That(_converter.Execute("%")).IsEqualTo(expected);
+        }
     }
 }

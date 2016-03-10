@@ -21,7 +21,7 @@
 
     public class ChuckNorrisBinaryConverter
     {
-        private static readonly StringToBinaryConverter StringToBinaryConverter = new StringToBinaryConverter();
+        private readonly StringToBinaryConverter StringToBinaryConverter = new StringToBinaryConverter();
 
         public string Execute(string message)
         {
