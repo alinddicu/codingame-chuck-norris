@@ -28,16 +28,14 @@
             var arrayOfStrings = StringToBinaryConverter
                 .Execute(message)
                 .Select(c => c.ToString())
+                .Select((s, index) => new { Index = index, @Byte = s })
                 .ToArray();
 
-            var results = arrayOfStrings
-                .Select((s, index) => new { Index = index, @Byte = s });
-
-            var previousByte = results.First().Byte;
+            var previousByte = arrayOfStrings.First().Byte;
             var series = new List<Serie>();
             var count = 0;
             var serie = new Serie(previousByte);
-            foreach (var item in results)
+            foreach (var item in arrayOfStrings)
             {
                 if (item.Byte != previousByte)
                 {
@@ -48,7 +46,7 @@
                 serie.Increment();
                 previousByte = item.Byte;
 
-                if (item.Index == results.Count() - 1)
+                if (item.Index == arrayOfStrings.Count() - 1)
                 {
                     series.Add(serie);
                 }
@@ -56,37 +54,33 @@
 
             return string.Join(" ", series);
         }
+    }
 
-        private class Serie
+    public class Serie
+    {
+        private int _count;
+
+        public Serie(string @byte)
         {
-            private int _count;
+            @Byte = @byte;
+        }
 
-            public Serie(string @byte)
+        public string @Byte { get; private set; }
+
+        public void Increment()
+        {
+            _count++;
+        }
+
+        public override string ToString()
+        {
+            var result = "0";
+            if (Byte == "0")
             {
-                @Byte = @byte;
+                result += "0";
             }
 
-            public string @Byte { get; private set; }
-
-            public void Increment()
-            {
-                _count++;
-            }
-
-            public override string ToString()
-            {
-                var result = "0 ";
-                if (Byte == "1")
-                {
-                    result += "0";
-                }
-                else
-                {
-                    result += "00";
-                }
-
-                return result + " ".PadRight(_count, '0');
-            }
+            return result + " ".PadRight(_count + 1, '0');
         }
     }
 
